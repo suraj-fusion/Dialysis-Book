@@ -4,6 +4,7 @@ import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../types";
 import { Ionicons } from "@expo/vector-icons";
+import { getFormattedTime } from "../util/date";
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
 
@@ -11,14 +12,18 @@ function Session({ date, startTime, endTime,weightBefore,weightAfter ,notes,id})
 
      const navigation= useNavigation<NavigationProp>()
 
-    function handlePress(){
-      navigation.navigate("Manage Session",{isEditing:true})
+    function handlePress(id){
+      navigation.navigate("Manage Session",{selectedSession:id})
     }
 
    const fluidRemoved = (weightBefore - weightAfter).toFixed(1);
+
+   const formattedStartTime=getFormattedTime(startTime);
+   const formattedendTime=getFormattedTime(endTime);
+  
   
   return (
-    <Pressable onPress={handlePress} style={({pressed})=>[styles.container,pressed && styles.pressed]}>
+    <Pressable onPress={()=>handlePress(id)} style={({pressed})=>[styles.container,pressed && styles.pressed]}>
       
      <View style={styles.title}>
         <Text style={styles.titleText}>Session {id}</Text>
@@ -30,7 +35,7 @@ function Session({ date, startTime, endTime,weightBefore,weightAfter ,notes,id})
         </View>
        <View style={styles.row}>
          <Ionicons name="time-outline" size={16} color="#DB3A3A" style={{ marginLeft: 16 }} />
-        <Text style={styles.timeText}>{startTime} – {endTime}</Text>
+        <Text style={styles.timeText}>{formattedStartTime} – {formattedendTime}</Text>
        </View>
        
       </View>

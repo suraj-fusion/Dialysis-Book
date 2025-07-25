@@ -8,6 +8,8 @@ import Sessions from "../components/Sessions";
 const AllDialysisSessions = () => {
   const { sessions } = useContext(SessionsContext);
 
+  console.log("here",sessions);
+
   return <Sessions sessions={sessions} />;
 };
 

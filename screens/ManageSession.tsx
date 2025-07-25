@@ -10,9 +10,10 @@ import GlobalColors from "../constants/Colors";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { useContext, useEffect, useLayoutEffect, useState } from "react";
 import { SessionsContext } from "../store/session-context";
+import { getFormattedDate } from "../util/date";
 
 const ManageSession = ({ navigation, route }) => {
-  const { sessions, addSession } = useContext(SessionsContext);
+  const { sessions, addSession, deleteSession,updateSession } = useContext(SessionsContext);
   const [sessionData, setSessionData] = useState({
     date: new Date(),
     startTime: new Date(),
@@ -22,44 +23,70 @@ const ManageSession = ({ navigation, route }) => {
     notes: "",
   });
 
-  const isEditing = route?.params?.isEditing;
+  const selectedSessionId = route?.params?.selectedSession;
+  const isEditing = selectedSessionId;
+  const selectedSession = sessions.filter(
+    (session) => session.id === selectedSessionId
+  )[0];
+
   useLayoutEffect(() => {
     navigation.setOptions({
       title: isEditing ? "Edit Session" : "Add Session",
     });
   }, []);
 
-
-  useEffect(()=>{
-    if(isEditing)
-    {
-
+  useEffect(() => {
+    if (isEditing) {
+      setSessionData({
+        date: new Date(selectedSession.date),
+        startTime: new Date(selectedSession.startTime),
+        endTime: new Date(selectedSession.endTime),
+        weightAfter: selectedSession.weightAfter.toString(),
+        weightBefore: selectedSession.weightBefore.toString(),
+        notes: selectedSession.notes,
+      });
     }
-  },[])
-
-
+  }, []);
 
   function addSessionHandler() {
-  
     const newSession = {
-      date: sessionData.date.toISOString().slice(0, 10),
-      startTime: sessionData.startTime.toTimeString().slice(0, 5),
-      endTime: sessionData.endTime.toTimeString().slice(0, 5),
+      date: getFormattedDate(sessionData.date),
+      startTime: sessionData.startTime.toString(),
+      endTime: sessionData.endTime.toString(),
       weightBefore: Number(sessionData.weightBefore),
       weightAfter: Number(sessionData.weightAfter),
       notes: sessionData.notes,
-      
     };
 
-   
     addSession(newSession);
-    navigation.goBack()
+    navigation.goBack();
   }
 
-  function cancelHandler()
-  {
-    navigation.goBack()
+  function updateSessionHandler() {
+    const updatedSessionData={
+       date: getFormattedDate(sessionData.date),
+      startTime: sessionData.startTime.toString(),
+      endTime: sessionData.endTime.toString(),
+      weightBefore: Number(sessionData.weightBefore),
+      weightAfter: Number(sessionData.weightAfter),
+      notes: sessionData.notes,
+      id:selectedSessionId
+    }
+
+    updateSession(updatedSessionData,selectedSessionId)
+     navigation.goBack();
   }
+
+  function deleteSessionHandler() {
+    deleteSession(selectedSessionId);
+    navigation.goBack();
+  }
+
+  function cancelHandler() {
+    navigation.goBack();
+  }
+
+
   return (
     <ScrollView style={styles.rootContainer}>
       <View style={styles.inputContainer}>
@@ -140,8 +167,12 @@ const ManageSession = ({ navigation, route }) => {
           />
         </View>
       </View>
-      <Button title="Add" onPress={addSessionHandler} />
-       <Button title="Cancel" onPress={cancelHandler} />
+      <Button
+        title={isEditing ? "Save" : "Add"}
+        onPress={isEditing ? updateSessionHandler : addSessionHandler}
+      />
+      <Button title="Delete" onPress={deleteSessionHandler} />
+      <Button title="Cancel" onPress={cancelHandler} />
     </ScrollView>
   );
 };
