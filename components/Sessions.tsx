@@ -1,37 +1,12 @@
 import { FlatList, StyleSheet, Text, View } from "react-native";
 import GlobalColors from "../constants/Colors";
-import {  useLayoutEffect } from "react";
+import { useLayoutEffect } from "react";
 import Session from "../components/Session";
-import Button from "../components/Button";
-
+import Button from "./HeaderButton";
 
 import { useNavigation } from "@react-navigation/native";
 
-
-
 const Sessions = ({ sessions }) => {
-
-
- 
-  const navigation=useNavigation()
-
-
-  useLayoutEffect(() => {
-    navigation.setOptions({
-      headerRight: () => (
-        <Button
-          name="add"
-          size={18}
-          color="white"
-          onPress={() => navigation.navigate("Manage Session")}
-        />
-      ),
-    });
-  }, []);
-
-  
-
-
   return (
     <View style={styles.rootContainer}>
       <FlatList
@@ -59,6 +34,5 @@ const styles = StyleSheet.create({
   rootContainer: {
     flex: 1,
     backgroundColor: GlobalColors.primary300,
-    
   },
 });

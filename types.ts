@@ -4,13 +4,23 @@ export type RootStackParamList = {
   "Dialysis Sessions": undefined;
 };
 
-export interface ButtonProps {
+export interface HeaderButtonProps {
   name: string; 
   size: number;
   color: string;
   id:number;
   onPress:()=>void;
 }
+
+export interface ButtonProps {
+
+  
+
+  onPress:()=>void;
+  text:string,
+}
+
+
 
 export type DialysisSession = {
   id: string;

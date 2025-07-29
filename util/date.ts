@@ -14,7 +14,7 @@ const hours = date.getHours();
 const minutes = date.getMinutes().toString().padStart(2, '0');
 const ampm = hours >= 12 ? 'pm' : 'am';
 const hour12 = hours % 12 || 12;
-const formattedTime = `${hour12}:${minutes}: ${ampm}`;
+const formattedTime = `${hour12}:${minutes} ${ampm}`;
 
 return formattedTime
 

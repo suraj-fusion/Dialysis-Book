@@ -1,19 +1,22 @@
-import {
-  Button,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TextInput,
-  View,
-} from "react-native";
+import { ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
 import GlobalColors from "../constants/Colors";
 import DateTimePicker from "@react-native-community/datetimepicker";
-import { useContext, useEffect, useLayoutEffect, useState } from "react";
+import {
+  useContext,
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useState,
+} from "react";
 import { SessionsContext } from "../store/session-context";
 import { getFormattedDate } from "../util/date";
 
+import Button from "../components/Button";
+
 const ManageSession = ({ navigation, route }) => {
-  const { sessions, addSession, deleteSession,updateSession } = useContext(SessionsContext);
+  const { sessions, addSession, deleteSession, updateSession } =
+    useContext(SessionsContext);
+
   const [sessionData, setSessionData] = useState({
     date: new Date(),
     startTime: new Date(),
@@ -25,6 +28,7 @@ const ManageSession = ({ navigation, route }) => {
 
   const selectedSessionId = route?.params?.selectedSession;
   const isEditing = selectedSessionId;
+
   const selectedSession = sessions.filter(
     (session) => session.id === selectedSessionId
   )[0];
@@ -63,18 +67,18 @@ const ManageSession = ({ navigation, route }) => {
   }
 
   function updateSessionHandler() {
-    const updatedSessionData={
-       date: getFormattedDate(sessionData.date),
+    const updatedSessionData = {
+      date: getFormattedDate(sessionData.date),
       startTime: sessionData.startTime.toString(),
       endTime: sessionData.endTime.toString(),
       weightBefore: Number(sessionData.weightBefore),
       weightAfter: Number(sessionData.weightAfter),
       notes: sessionData.notes,
-      id:selectedSessionId
-    }
+      id: selectedSessionId,
+    };
 
-    updateSession(updatedSessionData,selectedSessionId)
-     navigation.goBack();
+    updateSession(updatedSessionData, selectedSessionId);
+    navigation.goBack();
   }
 
   function deleteSessionHandler() {
@@ -85,7 +89,6 @@ const ManageSession = ({ navigation, route }) => {
   function cancelHandler() {
     navigation.goBack();
   }
-
 
   return (
     <ScrollView style={styles.rootContainer}>
@@ -132,9 +135,38 @@ const ManageSession = ({ navigation, route }) => {
               }}
             />
           </View>
-          <Text style={styles.labelText}>Pre Dialysis Weight</Text>
         </View>
         <View>
+          <Text style={styles.labelText}> Pre Dialysis Blood Pressure</Text>
+          <View style={styles.bpContainer}>
+            <View style={styles.bpReadingContainer}>
+              <Text style={styles.labelText}>Systolic</Text>
+              <TextInput style={[styles.textInput, styles.textInput2]} />
+            </View>
+
+            <View style={styles.bpReadingContainer}>
+              <Text style={styles.labelText}>Diastolic</Text>
+              <TextInput style={[styles.textInput, styles.textInput2]} />
+            </View>
+          </View>
+        </View>
+        <View>
+          <Text style={styles.labelText}> Post Dialysis Blood Pressure</Text>
+          <View style={styles.bpContainer}>
+            <View style={styles.bpReadingContainer}>
+              <Text style={styles.labelText}>Systolic</Text>
+              <TextInput style={[styles.textInput, styles.textInput2]} />
+            </View>
+
+            <View style={styles.bpReadingContainer}>
+              <Text style={styles.labelText}>Diastolic</Text>
+              <TextInput style={[styles.textInput, styles.textInput2]} />
+            </View>
+          </View>
+        </View>
+
+        <View>
+          <Text style={styles.labelText}>Pre Dialysis Weight</Text>
           <TextInput
             style={styles.textInput}
             placeholder="Enter Pre Dialysis Weight"
@@ -166,13 +198,29 @@ const ManageSession = ({ navigation, route }) => {
             }
           />
         </View>
+     
+          <View style={styles.mainButtonContainer}>
+            <Button
+              text={isEditing ? "Save" : "Add"}
+              onPress={isEditing ? updateSessionHandler : addSessionHandler}
+              style={styles.button}
+            />
+           {isEditing &&   <Button
+              text="Delete"
+              onPress={deleteSessionHandler}
+              style={styles.button}
+            />}
+           
+            <View style={styles.mainButtonContainer}>
+              <Button
+                text="Cancel"
+                onPress={cancelHandler}
+                style={styles.button}
+              />
+            </View>
+          </View>
+      
       </View>
-      <Button
-        title={isEditing ? "Save" : "Add"}
-        onPress={isEditing ? updateSessionHandler : addSessionHandler}
-      />
-      <Button title="Delete" onPress={deleteSessionHandler} />
-      <Button title="Cancel" onPress={cancelHandler} />
     </ScrollView>
   );
 };
@@ -189,7 +237,7 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   labelText: {
-    fontSize: 20,
+    fontSize: 15,
     fontWeight: 500,
   },
   textInput: {
@@ -197,7 +245,7 @@ const styles = StyleSheet.create({
     width: "100%",
     marginTop: 10,
     borderRadius: 10,
-    backgroundColor: GlobalColors.primary50,
+    backgroundColor: GlobalColors.primary100,
     marginBottom: 10,
   },
   dateTime: {
@@ -208,5 +256,29 @@ const styles = StyleSheet.create({
 
   notesInput: {
     height: 100,
+  },
+
+  textInput2: {
+    width: 100,
+  },
+  bpContainer: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    marginTop: 10,
+  },
+  bpReadingContainer: {
+    alignItems: "center",
+  },
+  buttonsContainer: {
+    gap: 10,
+  },
+  mainButtonContainer: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+  },
+  button: {
+    width: 100,
+    height: 40,
+    borderRadius: 20,
   },
 });
