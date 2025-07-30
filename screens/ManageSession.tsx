@@ -121,6 +121,12 @@ const ManageSession = ({ navigation, route }) => {
       return false;
     }
 
+    if(sessionData.weightAfter>sessionData.weightBefore)
+    {
+      Alert.alert("Error","Post Dialysis Weight must be smaller than Pre Dialysis Weight")
+      return false;
+    }
+
     return true;
   }
 
@@ -238,7 +244,7 @@ const ManageSession = ({ navigation, route }) => {
             <Text style={styles.labelText}> Pre Dialysis Blood Pressure</Text>
             <View style={styles.bpContainer}>
               <KeyboardAvoidingView style={styles.bpReadingContainer}>
-                <Text style={styles.labelText}>Systolic</Text>
+                <Text >Systolic</Text>
                 <TextInput
                   style={[styles.textInput, styles.textInput2]}
                   value={sessionData.preDialysisBP.systolic}
@@ -256,7 +262,7 @@ const ManageSession = ({ navigation, route }) => {
               </KeyboardAvoidingView>
 
               <View style={styles.bpReadingContainer}>
-                <Text style={styles.labelText}>Diastolic</Text>
+                <Text >Diastolic</Text>
                 <TextInput
                   style={[styles.textInput, styles.textInput2]}
                   value={sessionData.preDialysisBP.diastolic}
@@ -278,7 +284,7 @@ const ManageSession = ({ navigation, route }) => {
             <Text style={styles.labelText}> Post Dialysis Blood Pressure</Text>
             <View style={styles.bpContainer}>
               <View style={styles.bpReadingContainer}>
-                <Text style={styles.labelText}>Systolic</Text>
+                <Text>Systolic</Text>
                 <TextInput
                   style={[styles.textInput, styles.textInput2]}
                   value={sessionData.postDialysisBP.systolic}
@@ -296,7 +302,7 @@ const ManageSession = ({ navigation, route }) => {
               </View>
 
               <View style={styles.bpReadingContainer}>
-                <Text style={styles.labelText}>Diastolic</Text>
+                <Text >Diastolic</Text>
                 <TextInput
                   style={[styles.textInput, styles.textInput2]}
                   value={sessionData.postDialysisBP.diastolic}
@@ -396,7 +402,7 @@ const styles = StyleSheet.create({
   },
   labelText: {
     fontSize: 15,
-    fontWeight: 500,
+    fontWeight: 700,
   },
   textInput: {
     padding: 15,

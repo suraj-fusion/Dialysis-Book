@@ -53,7 +53,7 @@ function Session({ date, startTime, endTime,weightBefore,weightAfter ,notes,id,p
         <View style={styles.row}>
            <Ionicons name="water" size={16} color="lightblue" />
           <Text style={styles.weightText}>
-            {fluidRemoved} l water removed
+            {fluidRemoved} kg  removed
          </Text>
         </View>
         
