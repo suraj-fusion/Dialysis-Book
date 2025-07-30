@@ -8,7 +8,9 @@ import { getFormattedTime } from "../util/date";
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
 
-function Session({ date, startTime, endTime,weightBefore,weightAfter ,notes,id}) {
+function Session({ date, startTime, endTime,weightBefore,weightAfter ,notes,id,preDialysisBP,postDialysisBP}) {
+
+
 
      const navigation= useNavigation<NavigationProp>()
 
@@ -35,7 +37,7 @@ function Session({ date, startTime, endTime,weightBefore,weightAfter ,notes,id})
         </View>
        <View style={styles.row}>
          <Ionicons name="time-outline" size={16} color="#DB3A3A" style={{ marginLeft: 16 }} />
-        <Text style={styles.timeText}>{formattedStartTime} – {formattedendTime}</Text>
+        <Text style={styles.weightText}>{formattedStartTime} – {formattedendTime}</Text>
        </View>
        
       </View>
@@ -49,12 +51,37 @@ function Session({ date, startTime, endTime,weightBefore,weightAfter ,notes,id})
         </Text>
         </View>
         <View style={styles.row}>
-          <Text style={styles.fluidText}>
-           💧 {fluidRemoved} kg removed
+           <Ionicons name="water" size={16} color="lightblue" />
+          <Text style={styles.weightText}>
+            {fluidRemoved} l water removed
          </Text>
         </View>
+        
        
       </View>
+       <View style={styles.row}>
+        <View style={styles.row}>
+           <Ionicons name="analytics" size={16} color="#DB3A3A" />
+        <Text style={styles.weightText}>
+         Pre BP : 
+          {preDialysisBP.systolic}/ {preDialysisBP.diastolic} 
+          
+        </Text>
+        </View>
+
+         <View style={styles.row}>
+           <Ionicons name="analytics" size={16} color="#DB3A3A" />
+        <Text style={styles.weightText}>
+         Post BP :
+          {postDialysisBP.systolic}/ {postDialysisBP.diastolic} 
+          
+        </Text>
+        </View>
+        
+        </View>
+        
+       
+   
 
      
       {notes ? (
@@ -107,21 +134,13 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     fontSize: 14,
   },
-  timeText: {
-    marginLeft: 6,
-    fontSize: 14,
-  },
+
   weightText: {
     marginLeft: 6,
     fontSize: 14,
     fontWeight: "500",
   },
-  fluidText: {
-    marginLeft: 12,
-    fontSize: 13,
-    color: "#BA2525",
-    fontWeight: "500",
-  },
+
   notesContainer: {
     flexDirection: "row",
     alignItems: "flex-start",

@@ -1,12 +1,12 @@
 import { FlatList, StyleSheet, Text, View } from "react-native";
 import GlobalColors from "../constants/Colors";
-import { useLayoutEffect } from "react";
-import Session from "../components/Session";
-import Button from "./HeaderButton";
 
-import { useNavigation } from "@react-navigation/native";
+import Session from "../components/Session";
+
 
 const Sessions = ({ sessions }) => {
+
+  console.log(sessions)
   return (
     <View style={styles.rootContainer}>
       <FlatList
@@ -21,6 +21,8 @@ const Sessions = ({ sessions }) => {
             weightBefore={item.weightBefore}
             notes={item.notes}
             id={item.id}
+            preDialysisBP={item.preDialysisBP}
+             postDialysisBP={item.postDialysisBP}
           />
         )}
       />
