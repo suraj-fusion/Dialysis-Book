@@ -9,7 +9,7 @@ export function getDateMinusDays(date:Date,days:number){
 
 export function getFormattedTime(time:string){
 
-    const date = new Date(time);
+const date = new Date(time);
 const hours = date.getHours();
 const minutes = date.getMinutes().toString().padStart(2, '0');
 const ampm = hours >= 12 ? 'pm' : 'am';

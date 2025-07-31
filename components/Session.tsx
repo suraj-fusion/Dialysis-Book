@@ -8,89 +8,83 @@ import { getFormattedTime } from "../util/date";
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
 
-function Session({ date, startTime, endTime,weightBefore,weightAfter ,notes,id,preDialysisBP,postDialysisBP}) {
+function Session({
+  date,
+  startTime,
+  endTime,
+  weightBefore,
+  weightAfter,
+  notes,
+  id,
+  preDialysisBP,
+  postDialysisBP,
+}) {
+  const navigation = useNavigation<NavigationProp>();
 
+  function handlePress(id) {
+    navigation.navigate("Manage Session", { selectedSession: id });
+  }
 
+  const fluidRemoved = (weightBefore - weightAfter).toFixed(1);
 
-     const navigation= useNavigation<NavigationProp>()
+  const formattedStartTime = getFormattedTime(startTime);
+  const formattedendTime = getFormattedTime(endTime);
 
-    function handlePress(id){
-      navigation.navigate("Manage Session",{selectedSession:id})
-    }
-
-   const fluidRemoved = (weightBefore - weightAfter).toFixed(1);
-
-   const formattedStartTime=getFormattedTime(startTime);
-   const formattedendTime=getFormattedTime(endTime);
-  
-  
   return (
-    <Pressable onPress={()=>handlePress(id)} style={({pressed})=>[styles.container,pressed && styles.pressed]}>
-      
-     <View style={styles.title}>
+    <Pressable
+      onPress={() => handlePress(id)}
+      style={({ pressed }) => [styles.container, pressed && styles.pressed]}
+    >
+      <View style={styles.title}>
         <Text style={styles.titleText}>Session {id}</Text>
-     </View>
-      <View style={styles.row}>
-        <View style={styles.row}>
-        <Ionicons name="calendar" size={16} color="#DB3A3A" />
-        <Text style={styles.dateText}>{date}</Text>
-        </View>
-       <View style={styles.row}>
-         <Ionicons name="time-outline" size={16} color="#DB3A3A" style={{ marginLeft: 16 }} />
-        <Text style={styles.weightText}>{formattedStartTime} – {formattedendTime}</Text>
-       </View>
-       
       </View>
-
-    
       <View style={styles.row}>
         <View style={styles.row}>
-           <Ionicons name="scale-outline" size={16} color="#DB3A3A" />
-        <Text style={styles.weightText}>
-          {weightBefore} kg ➜ {weightAfter} kg
-        </Text>
+          <Ionicons name="calendar" size={16} color="#DB3A3A" />
+          <Text style={styles.dateText}>{date}</Text>
         </View>
         <View style={styles.row}>
-           <Ionicons name="water" size={16} color="lightblue" />
+          <Ionicons name="time-outline" size={16} color="#DB3A3A" />
           <Text style={styles.weightText}>
-            {fluidRemoved} kg  removed
-         </Text>
+            {formattedStartTime} – {formattedendTime}
+          </Text>
         </View>
-        
-       
       </View>
-       <View style={styles.row}>
+
+      <View style={styles.row}>
         <View style={styles.row}>
-           <Ionicons name="analytics" size={16} color="#DB3A3A" />
-        <Text style={styles.weightText}>
-         Pre BP : 
-          {preDialysisBP.systolic}/ {preDialysisBP.diastolic} 
-          
-        </Text>
+          <Ionicons name="scale-outline" size={16} color="#DB3A3A" />
+          <Text style={styles.weightText}>
+            {weightBefore} kg ➜ {weightAfter} kg
+          </Text>
+        </View>
+        <View style={[styles.row, { marginRight: "5%" }]}>
+          <Ionicons name="water" size={16} color="lightblue" />
+          <Text style={styles.weightText}>{fluidRemoved} kg removed</Text>
+        </View>
+      </View>
+      <View style={styles.row}>
+        <View style={styles.row}>
+          <Ionicons name="analytics" size={16} color="#DB3A3A" />
+          <Text style={styles.weightText}>
+            Pre BP :{preDialysisBP.systolic}/ {preDialysisBP.diastolic}
+          </Text>
         </View>
 
-         <View style={styles.row}>
-           <Ionicons name="analytics" size={16} color="#DB3A3A" />
-        <Text style={styles.weightText}>
-         Post BP :
-          {postDialysisBP.systolic}/ {postDialysisBP.diastolic} 
-          
-        </Text>
+        <View style={[styles.row, { marginRight: "3%" }]}>
+          <Ionicons name="analytics" size={16} color="#DB3A3A" />
+          <Text style={styles.weightText}>
+            Post BP :{postDialysisBP.systolic}/ {postDialysisBP.diastolic}
+          </Text>
         </View>
-        
-        </View>
-        
-       
-   
+      </View>
 
-     
       {notes ? (
         <View style={styles.notesContainer}>
           <Ionicons name="document-text-outline" size={16} color="#DB3A3A" />
           <Text style={styles.notesText}>{notes}</Text>
         </View>
       ) : null}
-  
     </Pressable>
   );
 }
@@ -102,8 +96,8 @@ const styles = StyleSheet.create({
     padding: 20,
     backgroundColor: GlobalColors.primary200,
     marginTop: 15,
-    marginBottom:5,
-    marginHorizontal:20,
+    marginBottom: 5,
+    marginHorizontal: 20,
     borderRadius: 6,
     shadowColor: "red",
     shadowOffset: { height: 1, width: 1 },
@@ -111,23 +105,22 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.4,
     elevation: 1,
   },
-  title:{
-    flexDirection:"row",
-    justifyContent:"center",
-    marginBottom:20
+  title: {
+    flexDirection: "row",
+    justifyContent: "center",
+    marginBottom: 20,
   },
-  titleText:{
-    
-    fontWeight:"700"
+  titleText: {
+    fontWeight: "700",
   },
-  pressed:{
-    opacity:0.5
+  pressed: {
+    opacity: 0.5,
   },
   row: {
     flexDirection: "row",
     alignItems: "center",
     marginBottom: 6,
-    justifyContent:"space-between"
+    justifyContent: "space-between",
   },
   dateText: {
     marginLeft: 6,
