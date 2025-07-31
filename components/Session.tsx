@@ -33,49 +33,50 @@ function Session({
   return (
     <Pressable
       onPress={() => handlePress(id)}
-      style={({ pressed }) => [styles.container, pressed && styles.pressed]}
+      style={({ pressed }) => [styles.rootContainer, pressed && styles.pressed]}
     >
       <View style={styles.title}>
         <Text style={styles.titleText}>Session {id}</Text>
       </View>
-      <View style={styles.row}>
-        <View style={styles.row}>
-          <Ionicons name="calendar" size={16} color="#DB3A3A" />
-          <Text style={styles.dateText}>{date}</Text>
-        </View>
-        <View style={styles.row}>
-          <Ionicons name="time-outline" size={16} color="#DB3A3A" />
-          <Text style={styles.weightText}>
-            {formattedStartTime} – {formattedendTime}
-          </Text>
-        </View>
-      </View>
 
-      <View style={styles.row}>
-        <View style={styles.row}>
-          <Ionicons name="scale-outline" size={16} color="#DB3A3A" />
-          <Text style={styles.weightText}>
-            {weightBefore} kg ➜ {weightAfter} kg
-          </Text>
-        </View>
-        <View style={[styles.row, { marginRight: "5%" }]}>
-          <Ionicons name="water" size={16} color="lightblue" />
-          <Text style={styles.weightText}>{fluidRemoved} kg removed</Text>
-        </View>
-      </View>
-      <View style={styles.row}>
-        <View style={styles.row}>
-          <Ionicons name="analytics" size={16} color="#DB3A3A" />
-          <Text style={styles.weightText}>
-            Pre BP :{preDialysisBP.systolic}/ {preDialysisBP.diastolic}
-          </Text>
-        </View>
 
-        <View style={[styles.row, { marginRight: "3%" }]}>
-          <Ionicons name="analytics" size={16} color="#DB3A3A" />
-          <Text style={styles.weightText}>
-            Post BP :{postDialysisBP.systolic}/ {postDialysisBP.diastolic}
-          </Text>
+      <View style={styles.container}>
+        <View >
+          <View style={styles.row}>
+            <Ionicons name="calendar" size={16} color="#DB3A3A" />
+            <Text>{date}</Text>
+          </View>
+          <View style={styles.row}>
+            <Ionicons name="scale-outline" size={16} color="#DB3A3A" />
+            <Text >
+              {weightBefore} kg ➜ {weightAfter} kg
+            </Text>
+          </View>
+
+          <View style={styles.row}>
+            <Ionicons name="analytics" size={16} color="#DB3A3A" />
+            <Text >
+              Pre BP : {preDialysisBP.systolic}/ {preDialysisBP.diastolic}
+            </Text>
+          </View>
+        </View>
+        <View style={styles.tempContainer}>
+          <View style={styles.row}>
+            <Ionicons name="time-outline" size={16} color="#DB3A3A" />
+            <Text >
+              {formattedStartTime} – {formattedendTime}
+            </Text>
+          </View>
+          <View style={[styles.row, { marginRight: "5%" }]}>
+            <Ionicons name="water" size={16} color="lightblue" />
+            <Text>{fluidRemoved} kg removed</Text>
+          </View>
+          <View style={[styles.row, { marginRight: "3%" }]}>
+            <Ionicons name="analytics" size={16} color="#DB3A3A" />
+            <Text >
+              Post BP : {postDialysisBP.systolic}/ {postDialysisBP.diastolic}
+            </Text>
+          </View>
         </View>
       </View>
 
@@ -92,7 +93,9 @@ function Session({
 export default Session;
 
 const styles = StyleSheet.create({
-  container: {
+
+  
+  rootContainer: {
     padding: 20,
     backgroundColor: GlobalColors.primary200,
     marginTop: 15,
@@ -105,6 +108,13 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.4,
     elevation: 1,
   },
+
+  container:{
+    flexDirection:"row",
+    justifyContent:"space-between",
+    alignItems:"center"
+  },
+
   title: {
     flexDirection: "row",
     justifyContent: "center",
@@ -119,20 +129,10 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: "row",
     alignItems: "center",
-    marginBottom: 6,
-    justifyContent: "space-between",
-  },
-  dateText: {
-    marginLeft: 6,
-    fontWeight: "600",
-    fontSize: 14,
+    marginBottom: 8,
+    gap:8
   },
 
-  weightText: {
-    marginLeft: 6,
-    fontSize: 14,
-    fontWeight: "500",
-  },
 
   notesContainer: {
     flexDirection: "row",

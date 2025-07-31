@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
   rootContainer: {
     backgroundColor: GlobalColors.primary400,
     alignItems:"center",
-    justifyContent:"center"
+    justifyContent:"center",
   },
   
 });

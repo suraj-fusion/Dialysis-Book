@@ -32,7 +32,8 @@ const styles = StyleSheet.create({
     height:32,
     width:32,
     alignItems:"center",
-    justifyContent:"center"
+    justifyContent:"center",
+    marginRight:10
   },
   
 });

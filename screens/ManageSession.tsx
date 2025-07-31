@@ -126,7 +126,9 @@ const ManageSession = ({ navigation, route }) => {
       return false;
     }
 
-    if (sessionData.weightAfter > sessionData.weightBefore) {
+    console.log(sessionData)
+
+    if (Number(sessionData.weightAfter) > Number(sessionData.weightBefore)) {
       Alert.alert(
         "Error",
         "Post Dialysis Weight must be smaller than Pre Dialysis Weight"
@@ -231,7 +233,7 @@ const ManageSession = ({ navigation, route }) => {
                     <DateTimePicker
                       value={sessionData.date}
                       mode="date"
-                      display="default"
+                      display="calendar"
                       onChange={(e, selectedDate) => {
                         setShowDatePicker(false);
                         if (selectedDate)
@@ -344,10 +346,11 @@ const ManageSession = ({ navigation, route }) => {
             <Text style={styles.labelText}> Pre Dialysis Blood Pressure</Text>
             <View style={styles.bpContainer}>
               <KeyboardAvoidingView style={styles.bpReadingContainer}>
-                <Text>Systolicc</Text>
+                <Text>Systolic</Text>
                 <TextInput
                   style={[styles.textInput, styles.textInput2]}
                   value={sessionData.preDialysisBP.systolic}
+                 placeholderTextColor="gray"
                   placeholder="Enter here"
                   keyboardType="numeric"
                   onChangeText={(enteredText) =>
@@ -367,6 +370,7 @@ const ManageSession = ({ navigation, route }) => {
                 <TextInput
                   style={[styles.textInput, styles.textInput2]}
                   value={sessionData.preDialysisBP.diastolic}
+                   placeholderTextColor="gray"
                   keyboardType="numeric"
                   placeholder="Enter here"
                   onChangeText={(enteredText) =>
@@ -391,6 +395,7 @@ const ManageSession = ({ navigation, route }) => {
                   style={[styles.textInput, styles.textInput2]}
                   value={sessionData.postDialysisBP.systolic}
                   placeholder="Enter here"
+                  placeholderTextColor="gray"
                   keyboardType="numeric"
                   onChangeText={(enteredText) =>
                     setSessionData((prev) => ({
@@ -409,6 +414,7 @@ const ManageSession = ({ navigation, route }) => {
                 <TextInput
                   style={[styles.textInput, styles.textInput2]}
                   value={sessionData.postDialysisBP.diastolic}
+                  placeholderTextColor="gray"
                   placeholder="Enter here"
                   keyboardType="numeric"
                   onChangeText={(enteredText) =>
@@ -432,6 +438,7 @@ const ManageSession = ({ navigation, route }) => {
               placeholder="Enter Pre Dialysis Weight"
               keyboardType="numeric"
               value={sessionData.weightBefore}
+               placeholderTextColor="gray"
               onChangeText={(enteredText) =>
                 setSessionData((prev) => ({
                   ...prev,
@@ -444,6 +451,7 @@ const ManageSession = ({ navigation, route }) => {
               style={styles.textInput}
               placeholder="Enter Post Dialysis Weight"
               keyboardType="numeric"
+                placeholderTextColor="gray"
               value={sessionData.weightAfter}
               onChangeText={(enteredText) =>
                 setSessionData((prev) => ({
@@ -459,6 +467,7 @@ const ManageSession = ({ navigation, route }) => {
               multiline={true}
               numberOfLines={4}
               value={sessionData.notes}
+               placeholderTextColor="gray"
               onChangeText={(enteredText) =>
                 setSessionData((prev) => ({ ...prev, notes: enteredText }))
               }
@@ -506,7 +515,7 @@ const styles = StyleSheet.create({
   },
   labelText: {
     fontSize: 15,
-    fontWeight: 700,
+    fontWeight: 600,
   },
   textInput: {
     padding: 15,
@@ -554,7 +563,7 @@ const styles = StyleSheet.create({
   },
 
   androidDateTime: {
-    backgroundColor: "#E0E0E0",
+    backgroundColor: "#eca5a5",
     borderRadius: 5,
     padding: 6,
   },
