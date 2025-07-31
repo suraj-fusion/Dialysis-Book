@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "Dialysis_Book",
+    "name": "Dialysis Book",
     "slug": "Dialysis_Book",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -13,17 +13,25 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
+      "buildNumber": "1.0.0",
       "supportsTablet": true
     },
     "android": {
+      "versionCode": 1,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "edgeToEdgeEnabled": true
+      "edgeToEdgeEnabled": true,
+      "package": "com.surajfusion.Dialysis_Book"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "912be670-4e64-4760-8990-0919e5fe5ec0"
+      }
     }
   }
 }

@@ -1,4 +1,4 @@
-import { Text, View } from "react-native";
+
 import Sessions from "../components/Sessions";
 import { SessionsContext } from "../store/session-context";
 import { useContext, useLayoutEffect } from "react";

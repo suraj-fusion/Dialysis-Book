@@ -6,19 +6,24 @@ import {
   StyleSheet,
   Text,
   TextInput,
+  TouchableOpacity,
   View,
 } from "react-native";
 import GlobalColors from "../constants/Colors";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { useContext, useEffect, useLayoutEffect, useState } from "react";
 import { SessionsContext } from "../store/session-context";
-import { getFormattedDate } from "../util/date";
+import { getFormattedDate, getFormattedTime } from "../util/date";
 
 import Button from "../components/Button";
 
 const ManageSession = ({ navigation, route }) => {
   const { sessions, addSession, deleteSession, updateSession } =
     useContext(SessionsContext);
+
+  const [showDatePicker, setShowDatePicker] = useState(false);
+  const [showStartTimePicker, setShowStartTimePicker] = useState(false);
+  const [showEndTimePicker, setShowEndTimePicker] = useState(false);
 
   const [sessionData, setSessionData] = useState({
     date: new Date(),
@@ -190,9 +195,9 @@ const ManageSession = ({ navigation, route }) => {
 
   return (
     <KeyboardAvoidingView
-      style={{ flex: 1 }}
-      behavior={"height"}
-      keyboardVerticalOffset={100}
+      style={{ flex: 1, backgroundColor: GlobalColors.primary300 }}
+      behavior="padding"
+      keyboardVerticalOffset={Platform.OS === "ios" ? 100 : 0}
     >
       <ScrollView style={styles.rootContainer}>
         <View style={styles.inputContainer}>
@@ -200,53 +205,146 @@ const ManageSession = ({ navigation, route }) => {
             <View style={styles.dateTime}>
               <Text style={styles.labelText}>Date</Text>
 
-              <DateTimePicker
-                testID="dateTimePicker"
-                value={sessionData.date}
-                mode="date"
-                is24Hour={true}
-                onChange={(_, selectedDate: Date) => {
-                  setSessionData((prev) => ({ ...prev, date: selectedDate }));
-                }}
-                style={styles.dateTimePicker}
-              />
+              {Platform.OS === "ios" ? (
+                <DateTimePicker
+                  value={sessionData.date}
+                  mode="date"
+                  display="default"
+                  onChange={(e, selectedDate) => {
+                    setShowDatePicker(false);
+                    if (selectedDate)
+                      setSessionData((prev) => ({
+                        ...prev,
+                        date: selectedDate,
+                      }));
+                  }}
+                />
+              ) : (
+                <>
+                  <TouchableOpacity
+                    onPress={() => setShowDatePicker(true)}
+                    style={styles.androidDateTime}
+                  >
+                    <Text>{getFormattedDate(sessionData.date)}</Text>
+                  </TouchableOpacity>
+                  {showDatePicker && (
+                    <DateTimePicker
+                      value={sessionData.date}
+                      mode="date"
+                      display="default"
+                      onChange={(e, selectedDate) => {
+                        setShowDatePicker(false);
+                        if (selectedDate)
+                          setSessionData((prev) => ({
+                            ...prev,
+                            date: selectedDate,
+                          }));
+                      }}
+                    />
+                  )}
+                </>
+              )}
             </View>
             <View style={styles.dateTime}>
               <Text style={styles.labelText}>Start Time</Text>
-              <DateTimePicker
-                testID="dateTimePicker"
-                value={sessionData.startTime}
-                mode="time"
-                is24Hour={true}
-                onChange={(_, selectedDate: Date) => {
-                  setSessionData((prev) => ({
-                    ...prev,
-                    startTime: selectedDate,
-                  }));
-                }}
-              />
+
+              {Platform.OS === "ios" ? (
+                <DateTimePicker
+                  value={sessionData.startTime}
+                  mode="time"
+                  is24Hour={true}
+                  display="default"
+                  onChange={(e, selectedTime) => {
+                    setShowStartTimePicker(false);
+                    if (selectedTime)
+                      setSessionData((prev) => ({
+                        ...prev,
+                        startTime: selectedTime,
+                      }));
+                  }}
+                />
+              ) : (
+                <>
+                  <TouchableOpacity
+                    onPress={() => setShowStartTimePicker(true)}
+                    style={styles.androidDateTime}
+                  >
+                    <Text>
+                      {getFormattedTime(sessionData.startTime.toISOString())}
+                    </Text>
+                  </TouchableOpacity>
+                  {showStartTimePicker && (
+                    <DateTimePicker
+                      value={sessionData.startTime}
+                      mode="time"
+                      is24Hour={true}
+                      display="default"
+                      onChange={(e, selectedTime) => {
+                        setShowStartTimePicker(false);
+                        if (selectedTime)
+                          setSessionData((prev) => ({
+                            ...prev,
+                            startTime: selectedTime,
+                          }));
+                      }}
+                    />
+                  )}
+                </>
+              )}
             </View>
             <View style={styles.dateTime}>
               <Text style={styles.labelText}>End Time</Text>
-              <DateTimePicker
-                testID="dateTimePicker"
-                value={sessionData.endTime}
-                mode="time"
-                is24Hour={true}
-                onChange={(_, selectedDate: Date) => {
-                  setSessionData((prev) => ({
-                    ...prev,
-                    endTime: selectedDate,
-                  }));
-                }}
-              />
+
+              {Platform.OS === "ios" ? (
+                <DateTimePicker
+                  value={sessionData.endTime}
+                  mode="time"
+                  is24Hour={true}
+                  display="default"
+                  onChange={(e, selectedTime) => {
+                    setShowEndTimePicker(false);
+                    if (selectedTime)
+                      setSessionData((prev) => ({
+                        ...prev,
+                        endTime: selectedTime,
+                      }));
+                  }}
+                />
+              ) : (
+                <>
+                  <TouchableOpacity
+                    style={styles.androidDateTime}
+                    onPress={() => setShowEndTimePicker(true)}
+                  >
+                    <Text>
+                      {getFormattedTime(sessionData.endTime.toISOString())}
+                    </Text>
+                  </TouchableOpacity>
+                  {showEndTimePicker && (
+                    <DateTimePicker
+                      value={sessionData.endTime}
+                      mode="time"
+                      is24Hour={true}
+                      display="default"
+                      onChange={(e, selectedTime) => {
+                        setShowEndTimePicker(false);
+                        if (selectedTime)
+                          setSessionData((prev) => ({
+                            ...prev,
+                            endTime: selectedTime,
+                          }));
+                      }}
+                    />
+                  )}
+                </>
+              )}
             </View>
           </View>
           <View>
             <Text style={styles.labelText}> Pre Dialysis Blood Pressure</Text>
             <View style={styles.bpContainer}>
               <KeyboardAvoidingView style={styles.bpReadingContainer}>
-                <Text>Systolic</Text>
+                <Text>Systolicc</Text>
                 <TextInput
                   style={[styles.textInput, styles.textInput2]}
                   value={sessionData.preDialysisBP.systolic}
@@ -417,6 +515,8 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     backgroundColor: GlobalColors.primary100,
     marginBottom: 10,
+    textAlignVertical: "top",
+    textAlign: "left",
   },
   dateTime: {
     flexDirection: "row",
@@ -430,7 +530,7 @@ const styles = StyleSheet.create({
 
   textInput2: {
     width: 100,
-    textAlign:"center"
+    textAlign: "center",
   },
   bpContainer: {
     flexDirection: "row",
@@ -451,5 +551,11 @@ const styles = StyleSheet.create({
     width: 100,
     height: 40,
     borderRadius: 20,
+  },
+
+  androidDateTime: {
+    backgroundColor: "#E0E0E0",
+    borderRadius: 5,
+    padding: 6,
   },
 });
