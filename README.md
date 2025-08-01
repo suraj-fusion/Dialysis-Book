@@ -12,7 +12,7 @@ This app is my way of solving that problem with technology. It’s built to help
 
 ---
 
-## 🚀 Features
+##  Features
 
 - 📅 Track dialysis session details (date, time, weight, blood pressure, notes)
 - 📊 View session history in a clean interface
@@ -21,8 +21,21 @@ This app is my way of solving that problem with technology. It’s built to help
 - 🎨 Beautiful and responsive UI
 
 ---
+##  Screenshots
 
-## 📦 Tech Stack
+<img width="430" height="932" alt="IMG_2472" src="https://github.com/user-attachments/assets/fa702f2a-62ef-4df5-980c-ff1a5dc60b8f" />
+
+
+<img width="430" height="932" alt="IMG_2472" src="https://github.com/user-attachments/assets/2b1aec33-4954-432c-a7bb-54f86cc94b2f" />
+
+<img width="430" height="932" alt="IMG_2477" src="https://github.com/user-attachments/assets/2c6d2158-4adb-4806-8062-5028c612e154" />
+
+
+
+<img width="430" height="932" alt="IMG_2476" src="https://github.com/user-attachments/assets/63d70248-fa39-4e12-9a13-ebe1f997bbb0" />
+
+
+##  Tech Stack
 
 - [React Native](https://reactnative.dev/)
 - [Expo](https://expo.dev/)
@@ -31,7 +44,7 @@ This app is my way of solving that problem with technology. It’s built to help
 
 ---
 
-## 📱 Running Locally
+##  Running Locally
 
 1. **Clone the repository**
 
