@@ -4,6 +4,7 @@ import ManageSession from "./screens/ManageSession";
 import { NavigationContainer } from "@react-navigation/native";
 import GlobalColors from "./constants/Colors";
 import { StatusBar } from "expo-status-bar";
+
 import { SessionsContextProvider } from "./store/session-context";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import RecentDialysisSessions from "./screens/RecentDialysisSessions";

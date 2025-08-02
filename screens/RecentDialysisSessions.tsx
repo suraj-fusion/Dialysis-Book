@@ -10,6 +10,8 @@ import Info from "../components/Info";
 function RecentDialysisSessions() {
   const { sessions } = useContext(SessionsContext);
 
+  
+
   const navigation = useNavigation();
 
   useLayoutEffect(() => {
@@ -24,6 +26,7 @@ function RecentDialysisSessions() {
       ),
     });
   }, []);
+
 
   const recentSessions = sessions.filter((session) => {
     const today = new Date();
