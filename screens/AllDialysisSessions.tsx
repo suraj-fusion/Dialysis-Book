@@ -5,6 +5,7 @@ import Sessions from "../components/Sessions";
 import Info from "../components/Info";
 import Button from "../components/HeaderButton";
 import { useNavigation } from "@react-navigation/native";
+import { generateAndSharePDF } from "../util/pdfGeneration";
 
 const AllDialysisSessions = () => {
   const { sessions } = useContext(SessionsContext);
@@ -19,6 +20,15 @@ const AllDialysisSessions = () => {
           size={18}
           color="white"
           onPress={() => navigation.navigate("Manage Session")}
+        />
+      ),
+
+        headerLeft: () => (
+        <Button
+          name="document-text-outline"
+          size={18}
+          color="white"
+          onPress={()=>generateAndSharePDF(sessions,"All")} 
         />
       ),
     });

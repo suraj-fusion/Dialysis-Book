@@ -1,3 +1,6 @@
+
+
+
 export function getFormattedDate(date:Date)
 {
     return date.toISOString().slice(0,10)
@@ -19,3 +22,5 @@ const formattedTime = `${hour12}:${minutes} ${ampm}`;
 return formattedTime
 
 }
+
+
