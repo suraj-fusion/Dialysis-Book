@@ -79,61 +79,72 @@ const ManageSession = ({ navigation, route }) => {
     const start = new Date(sessionData.startTime);
     const end = new Date(sessionData.endTime);
 
-    if (start >= end) {
-      Alert.alert("Error", "Start time must be earlier than End time.");
-      return false;
-    }
-
-    // Validate preDialysisBP
     if (
-      !isValidNumber(sessionData.preDialysisBP.systolic) ||
-      !isValidNumber(sessionData.preDialysisBP.diastolic)
+      sessionData.preDialysisBP.systolic ||
+      sessionData.preDialysisBP.diastolic
     ) {
-      Alert.alert(
-        "Error",
-        "Pre Dialysis Blood Pressure values should be a number and not empty."
-      );
-      return false;
+      // Validate preDialysisBP
+      if (
+        !isValidNumber(sessionData.preDialysisBP.systolic) ||
+        !isValidNumber(sessionData.preDialysisBP.diastolic)
+      ) {
+        Alert.alert(
+          "Error",
+          "Pre Dialysis Blood Pressure values should be a number"
+        );
+        return false;
+      }
     }
 
-    // Validate postDialysisBP
     if (
-      !isValidNumber(sessionData.postDialysisBP.systolic) ||
-      !isValidNumber(sessionData.postDialysisBP.diastolic)
+      sessionData.postDialysisBP.systolic ||
+      sessionData.postDialysisBP.diastolic
     ) {
-      Alert.alert(
-        "Error",
-        "Post Dialysis Blood Pressure values should be a number and not empty."
-      );
-      return false;
+      // Validate postDialysisBP
+      if (
+        !isValidNumber(sessionData.postDialysisBP.systolic) ||
+        !isValidNumber(sessionData.postDialysisBP.diastolic)
+      ) {
+        Alert.alert(
+          "Error",
+          "Post Dialysis Blood Pressure values should be a number and not empty."
+        );
+        return false;
+      }
     }
 
-    // Validate weightBefore
-    if (!isValidNumber(sessionData.weightBefore)) {
-      Alert.alert(
-        "Error",
-        "Pre Dialysis Weight should be a number and not empty."
-      );
-      return false;
+    if (sessionData.weightBefore) {
+      // Validate weightBefore
+      if (!isValidNumber(sessionData.weightBefore)) {
+        Alert.alert(
+          "Error",
+          "Pre Dialysis Weight should be a number and not empty."
+        );
+        return false;
+      }
     }
 
-    // Validate weightAfter
-    if (!isValidNumber(sessionData.weightAfter)) {
-      Alert.alert(
-        "Error",
-        "Post Dialysis Weight should be a number and not empty."
-      );
-      return false;
+    if (sessionData.weightAfter) {
+      // Validate weightAfter
+      if (!isValidNumber(sessionData.weightAfter)) {
+        Alert.alert(
+          "Error",
+          "Post Dialysis Weight should be a number and not empty."
+        );
+        return false;
+      }
     }
 
-    console.log(sessionData)
+    console.log(sessionData);
 
-    if (Number(sessionData.weightAfter) > Number(sessionData.weightBefore)) {
-      Alert.alert(
-        "Error",
-        "Post Dialysis Weight must be smaller than Pre Dialysis Weight"
-      );
-      return false;
+    if (sessionData.weightAfter && sessionData.weightBefore) {
+      if (Number(sessionData.weightAfter) > Number(sessionData.weightBefore)) {
+        Alert.alert(
+          "Error",
+          "Post Dialysis Weight must be smaller than Pre Dialysis Weight"
+        );
+        return false;
+      }
     }
 
     return true;
@@ -350,7 +361,7 @@ const ManageSession = ({ navigation, route }) => {
                 <TextInput
                   style={[styles.textInput, styles.textInput2]}
                   value={sessionData.preDialysisBP.systolic}
-                 placeholderTextColor="gray"
+                  placeholderTextColor="gray"
                   placeholder="Enter here"
                   keyboardType="numeric"
                   onChangeText={(enteredText) =>
@@ -370,7 +381,7 @@ const ManageSession = ({ navigation, route }) => {
                 <TextInput
                   style={[styles.textInput, styles.textInput2]}
                   value={sessionData.preDialysisBP.diastolic}
-                   placeholderTextColor="gray"
+                  placeholderTextColor="gray"
                   keyboardType="numeric"
                   placeholder="Enter here"
                   onChangeText={(enteredText) =>
@@ -432,13 +443,13 @@ const ManageSession = ({ navigation, route }) => {
           </View>
 
           <View>
-            <Text style={styles.labelText}>Pre Dialysis Weight</Text>
+            <Text style={styles.labelText}>Pre Dialysis Weight  (in kg)</Text>
             <TextInput
               style={styles.textInput}
               placeholder="Enter Pre Dialysis Weight"
               keyboardType="numeric"
               value={sessionData.weightBefore}
-               placeholderTextColor="gray"
+              placeholderTextColor="gray"
               onChangeText={(enteredText) =>
                 setSessionData((prev) => ({
                   ...prev,
@@ -446,12 +457,12 @@ const ManageSession = ({ navigation, route }) => {
                 }))
               }
             />
-            <Text style={styles.labelText}>Post Dialysis Weight</Text>
+            <Text style={styles.labelText}>Post Dialysis Weight (in kg)</Text>
             <TextInput
               style={styles.textInput}
               placeholder="Enter Post Dialysis Weight"
               keyboardType="numeric"
-                placeholderTextColor="gray"
+              placeholderTextColor="gray"
               value={sessionData.weightAfter}
               onChangeText={(enteredText) =>
                 setSessionData((prev) => ({
@@ -467,7 +478,7 @@ const ManageSession = ({ navigation, route }) => {
               multiline={true}
               numberOfLines={4}
               value={sessionData.notes}
-               placeholderTextColor="gray"
+              placeholderTextColor="gray"
               onChangeText={(enteredText) =>
                 setSessionData((prev) => ({ ...prev, notes: enteredText }))
               }

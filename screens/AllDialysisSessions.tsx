@@ -25,7 +25,7 @@ const AllDialysisSessions = () => {
 
         headerLeft: () => (
         <Button
-          name="document-text-outline"
+          name="share"
           size={18}
           color="white"
           onPress={()=>generateAndSharePDF(sessions,"All")} 
