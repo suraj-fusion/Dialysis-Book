@@ -64,4 +64,3 @@ npm start
 ```
 Download and open the expo go app and scan the QR code produced.
 
-Andriod Users can directly download the apk from here : https://drive.google.com/file/d/10qxusEinRP86wRAUe7HTSlMjsA2yy-4f/view?usp=sharing
