@@ -19,6 +19,7 @@ This app is my way of solving that problem with technology. It’s built to help
 - 📝 Add/edit/delete sessions
 - ☁️ Offline-first experience
 - 🎨 Beautiful and responsive UI
+- 📂 Export data as pdf to quickly share with healthcare providers
 
 ---
 ##  Screenshots
