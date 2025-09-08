@@ -57,7 +57,7 @@ export function SessionsContextProvider({ children }: SessionsProviderProps) {
 
   function addSession(sessionData: DialysisSession) {
     setSessionsState((prevSessions) => [
-      { id: sessions.length + 1, ...sessionData },
+      { id: sessions.length===0 ? 1: prevSessions[prevSessions.length-1].id+1, ...sessionData },
       ...prevSessions,
     ]);
   }

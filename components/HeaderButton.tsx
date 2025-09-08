@@ -33,7 +33,8 @@ const styles = StyleSheet.create({
     width:32,
     alignItems:"center",
     justifyContent:"center",
-    marginRight:10
+    marginRight:10,
+    marginLeft:10
   },
   
 });

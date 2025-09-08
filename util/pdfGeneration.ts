@@ -34,7 +34,7 @@ export   const generateAndSharePDF = async (sessions:DialysisSession[],type) => 
               <td>${s.date}</td>
               <td>${ getFormattedTime(s.startTime ) } -${ getFormattedTime(s.endTime)} </td>
               <td>${s.weightBefore}kg--${s.weightAfter}kg</td>
-              <td>${Number(s.weightBefore) -  Number(s.weightAfter)}kg</td>
+              <td>${(Number(s.weightBefore) -  Number(s.weightAfter)).toFixed(1) }kg</td>
               <td>${s.preDialysisBP.systolic}/${s.preDialysisBP.diastolic}--${s.postDialysisBP.systolic}/${s.postDialysisBP.diastolic}</td>
               <td>${s.notes || "N/A"}</td>
             </tr>
@@ -44,8 +44,6 @@ export   const generateAndSharePDF = async (sessions:DialysisSession[],type) => 
         </table>
       `;
 
-    
-      const fileName= `${type}_Dialysis_Sessions.pdf`;
       const { uri } = await Print.printToFileAsync({ html: htmlContent });
 
       const newUri = FileSystem.documentDirectory + `${type}_Dialysis_Sessions.pdf`;
